@@ -17,21 +17,21 @@ type Suitor struct {
 	suite.Suite
 
 	loader *Loader
-	JsonFile string
+	JSONFile string
 }
 
 // Make sure that VariableThatShouldStartAtFive is set to five
 // before each test
 func (suitor *Suitor) SetupSuite() {
-	suitor.JsonFile = "test.dev.json"
+	suitor.JSONFile = "test.dev.json"
 
 	suitor.loader = &Loader{
 		fs: afero.NewOsFs(),
 		paths: defaultPaths,
-		fileName: suitor.JsonFile,
+		fileName: suitor.JSONFile,
 	}
 
-	initConfig(suitor.JsonFile, jsonExample)
+	initConfig(suitor.JSONFile, jsonExample)
 }
 
 // The SetupTest method will be run before every test in the suite.
@@ -40,7 +40,12 @@ func (suitor *Suitor) SetupTest() {
 
 // The TearDownTest method will be run after every test in the suite.
 func (suitor *Suitor) TearDownTest() {
-	os.Remove(suitor.JsonFile)
+}
+
+// TearDownAllSuite has a TearDownSuite method, which will run after
+// all the tests in the suite have been run.
+func (suitor *Suitor) TearDownSuite() {
+	os.Remove(suitor.JSONFile)
 }
 
 // In order for 'go test' to run this suite, we need to create
