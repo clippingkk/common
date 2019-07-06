@@ -72,7 +72,7 @@ func (l *Loader) fetchFile() error {
 }
 
 func (l *Loader) loadSettings() error {
-	file, err := afero.ReadFile(l.fs, l.fileName)
+	file, err := afero.ReadFile(l.fs, l.file)
 	if err != nil {
 		return err
 	}
